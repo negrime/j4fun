@@ -29,7 +29,7 @@ setInterval(kek, 10000);
 function kek()
 {
     $.ajax({
-        url: "https://api.vk.com/method/wall.createComment?owner_id=-143393434&post_id=629&message=test&access_token=" + ACCESS_TOKEN + "&v=5.52",
+        url: "https://api.vk.com/method/wall.createComment?owner_id=-143393434&post_id=629&message=" + commentMessage +"&access_token=" + ACCESS_TOKEN + "&v=5.52",
         type: 'GET',
         dataType: 'jsonp',
         success: function(data){
