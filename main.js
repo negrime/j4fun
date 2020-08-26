@@ -24,7 +24,7 @@ textInput.oninput = function () {
 }
 
 
-//setInterval(kek, 1000);
+setInterval(kek, 10000);
 
 function kek()
 {
