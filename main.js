@@ -1,7 +1,7 @@
 "use strict"
 
 const APP_ID = "7577780";
-const AUTH_LINK = "https://oauth.vk.com/authorize?client_id=" + APP_ID + "&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=offline&wall&groups&response_type=token&v=5.52";
+const AUTH_LINK = "https://oauth.vk.com/authorize?client_id=" + APP_ID + "&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=offline&status&wall&groups&response_type=token&v=5.52";
 const ACCESS_TOKEN = "251a7ab661a33dc0eb19e7d99f4af802eccca92b7fd9a7bfe7b01b64c9359735d018fd4456d589e3c6d1e";
 const SERVICE_KEY = "8e9d9bae8e9d9bae8e9d9bae4e8eee3b1a88e9d8e9d9baed1d8a8ffd8000c37c78c8c59";
 
@@ -18,14 +18,14 @@ let textInput = document.getElementById("message");
 
 let tokenText = document.getElementById("token");
 console.log(tokenText);
-let changeToken = "";
 
-tokenText.oninput = function (){
-  //  if (tokenText.value.length === 85)
-   /// {
-        changeToken = tokenText.value;
-    //}
+let button = document.getElementById("btn");
+
+button.onclick = function() {
+    kek();
 }
+
+
 
 let commentMessage = "";
 
@@ -35,12 +35,12 @@ textInput.oninput = function () {
 }
 
 
-setInterval(kek, 500);
+
 
 function kek()
 {
     $.ajax({
-        url: "https://api.vk.com/method/wall.createComment?owner_id=-143393434&post_id=629&message=" + commentMessage +"&access_token=" + tokenText.value + "&v=5.52",
+        url: "https://api.vk.com/method/wall.createComment?owner_id=-143393434&post_id=625&message=" + commentMessage +"&access_token=" + tokenText.value + "&v=5.52",
         type: 'GET',
         dataType: 'jsonp',
         success: function(data){
