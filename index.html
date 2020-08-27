@@ -7,12 +7,27 @@
 
 <body>
 <p id="aboveTxt"></p>
+<input id="groupId" type="text" maxlength="100" placeholder="Введи ID группы">
+<br>
+<br>
 <input id="token" type="text" maxlength="100" placeholder="Введи токен сюда">
 <a href="https://oauth.vk.com/authorize?client_id=7577780&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=wall&response_type=token&v=5.52" target="_blank">Для моей работы нужен токен!</a>
 <br>
 <br>
 <input id="message" type="text" maxlength="20" placeholder="Сюда напиши  сообщение">
-<button id="btn">Погнали</button>
+
+<!-- <button id="btn">Погнали</button> -->
+<br>
+<br>
+
+<input id="keyWords" type="text" size="50"  placeholder="Ключевые слова поста, введите через &quot;;&quot; ">
+<p id="keyWordsDisplay"><p>
+
+<button id="getPosts">Погнали</button>
+<button id="stop">Стоп</button>
+
+
+
 </body>
 
 <script
