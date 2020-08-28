@@ -1,47 +1,52 @@
 "use strict"
 
-const APP_ID = "7577780";
-const AUTH_LINK = "https://oauth.vk.com/authorize?client_id=" + APP_ID + "&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=offline&status&wall&groups&response_type=token&v=5.52";
-const ACCESS_TOKEN = "251a7ab661a33dc0eb19e7d99f4af802eccca92b7fd9a7bfe7b01b64c9359735d018fd4456d589e3c6d1e";
-const SERVICE_KEY = "8e9d9bae8e9d9bae8e9d9bae4e8eee3b1a88e9d8e9d9baed1d8a8ffd8000c37c78c8c59";
 
-let phrases = ["Не обращай внимение на этот ублюдсикй дизайн", "Дизайн от Артемия Лебедева"];
+const APP_ID = "7577780";
+let phrases = ["Не обращай внимания на этот ублюдсикй дизайн", "Дизайн от Артемия Лебедева"];
 
 let keyWords = [];
 let lastPostId = -1;
-let mainText = document.getElementById("aboveTxt").innerText = phrases[Math.floor(Math.random() * phrases.length)];
-console.log(AUTH_LINK);
-console.log("https://api.vk.com/method/wall.createComment?owner_id=-143393434&post_id=629&message=test&access_token=" + ACCESS_TOKEN + "&v=5.52");
+let commentMessage = "";
 
-console.log("https://api.vk.com/method/wall.get?owner_id=-143393434&count=1&message=test&access_token=" + ACCESS_TOKEN + "&v=5.52");
-
+document.getElementById("aboveTxt").innerText = phrases[Math.floor(Math.random() * phrases.length)];
 let textInput = document.getElementById("message");
-
 let textGroupId = document.getElementById("groupId");
-
 let tokenText = document.getElementById("token");
-
 let stopButton = document.getElementById("stop");
-
 let keyWordsInput = document.getElementById("keyWords");
 let keyWordsDisplay = document.getElementById("keyWordsDisplay");
-
-stopButton.disabled = true;
-
-
-
-
-//let button = document.getElementById("btn");
 let getPostsButton = document.getElementById("getPosts");
+let scanText = document.getElementById("scan");
+let linkToPost = document.getElementById("linkToPost");
 
-
-console.log(getPostsButton);
 
 let postsChecker;
+let scanAnimation;
+
+console.log(scanText);
+
+stopButton.disabled = true;
+scanText.style.display = "none";
+linkToPost.style.display = "none";
+
 getPostsButton.onclick = function() {
+    linkToPost.style.display = "none";
+    scanText.innerText = "Сканирую";
+    scanText.style.display = "inline";
     getPostsButton.disabled = true;
     stopButton.disabled = false;
+    checkLastPost();
     postsChecker = setInterval(checkLastPost, 5000);
+
+    let dotIndex = 0;
+    scanAnimation = setInterval(() => {
+        dotIndex++;
+        scanText.innerText += ".";
+            if (dotIndex > 3) {
+                scanText.innerText = "Сканирую";
+                dotIndex = 0;
+            }
+    }, 500)
 }
 
 textGroupId.oninput = function() {
@@ -49,15 +54,12 @@ textGroupId.oninput = function() {
 }
 
 stopButton.onclick = function() {
+    scanText.style.display = "none";
     clearInterval(postsChecker);
+    clearInterval(scanAnimation);
     stopButton.disabled = true;
     getPostsButton.disabled = false;
 }
-
-
-
-let commentMessage = "";
-
 
 textInput.oninput = function () {
     commentMessage = textInput.value;
@@ -100,8 +102,10 @@ function checkLastPost() {
 
             if (isContains) {
                 sendMessage(post.id);
+                clearInterval(scanAnimation);
+                scanText.innerText = "Комментарий отправлен!";
+                PostLinkByGroupId(textGroupId.value, post.id);
             }
-
         }
     })
 }
@@ -119,8 +123,18 @@ function sendMessage(postId)
     })
 }
 
-function showToken() {
-    console.log(ACCESS_TOKEN);
+function PostLinkByGroupId(groupId, postId) {
+
+    $.ajax({
+        url: "https://api.vk.com/method/groups.getById?group_id="+ groupId +"&access_token=" + tokenText.value + "&v=5.52",
+        type: 'GET',
+        dataType: 'jsonp',
+        success: function(data){
+            console.log(data.response);
+            linkToPost.style.display = "inline";
+            linkToPost.href = "https://vk.com/"+ data.response[0].screen_name +"?w=wall-"+ groupId +"_" + postId;
+        }
+    })
 }
 
 
