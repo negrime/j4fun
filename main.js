@@ -76,7 +76,7 @@ keyWordsInput.oninput = function () {
 
 function checkLastPost() {
     $.ajax({
-        url: "https://api.vk.com/method/wall.get?owner_id=-123621826&count=2&access_token=3eeedc3485db29b3835fc86ab9a8cd4da0ae054bdf51503d459fd82e99306c649c94a2a20fae8f1549745&v=5.52",
+        url: "https://api.vk.com/method/wall.get?owner_id=-"+ textGroupId.value +"&count=2&access_token="+ tokenText.value +"&v=5.52",
         type: 'GET',
         dataType: 'jsonp',
         success: function(data){
