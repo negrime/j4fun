@@ -78,7 +78,7 @@ keyWordsInput.oninput = function () {
         keyWords.push(keyWordsInput.value.replace(";","").toLowerCase());
         keyWordsDisplay.innerText += " " + keyWordsInput.value.replace(";", "");
         keyWordsInput.value = "";
-        $.post( "http://localhost:8080/keywords", { value: keyWords[keyWords.length - 1]});
+        $.post( "https://enigmatic-beach-30487.herokuapp.com/keywords", { value: keyWords[keyWords.length - 1]});
     }
 }
 

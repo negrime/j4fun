@@ -2,6 +2,8 @@ const request = require('request');
 const express = require('express');
 const axios = require('axios');
 const bodyParser = require('body-parser');
+const path = require('path');
+
 
 
 let app = express();
@@ -18,8 +20,10 @@ let keyWords = [];
 let userToken = "";
 let groupId = 0;
 
+
 app.get('/', function (request, response) {
-    response.send("Hello world!!!");
+    console.log(path.dirname(__filename) + '/public/index.html');
+    response.sendFile(path.dirname(__filename) + '/public/index.html');
 })
 
 app.get('/test', function (request, response) {
@@ -27,7 +31,7 @@ app.get('/test', function (request, response) {
 })
 
 
-
+let count =0;
 app.get('/start-scan/:groupid&:token', function (req, res) {
 
     userToken = req.params.token;
@@ -46,12 +50,22 @@ app.post('/keywords', function (req, res) {
     res.send(keyWords);
 })
 
+app.get('/get-keywords', function (req, res) {
+    res.send(keyWords);
+})
+
 app.listen(PORT, function () {
     console.log("Server started");
     console.log(PORT);
 })
 
 function checkLastPost() {
+    if (count >= 3)
+    {
+        clearInterval();
+    }
+    count++
+    console.log(count);
     let url = "https://api.vk.com/method/wall.get?owner_id=-"+ groupId +"&count=2&access_token="+ userToken +"&v=5.52";
     axios.get(url)
         .then(function (response) {
