@@ -2,7 +2,7 @@ const request = require('request');
 const express = require('express');
 const axios = require('axios');
 const bodyParser = require('body-parser');
-const path = require('path');
+
 
 
 
@@ -21,8 +21,8 @@ let userToken = "";
 let groupId = 0;
 
 app.get('/', function (request, response) {
-    console.log(path.dirname(__filename) + '/public/index.html');
-    response.sendFile(path.dirname(__filename) + '/public/index.html');
+//    console.log(path.dirname(__filename) + '/public/index.html');
+    response.send("hello");
 })
 
 app.get('/test', function (request, response) {
@@ -95,10 +95,7 @@ function checkLastPost() {
                 // scanText.innerText = "Комментарий отправлен!";
                 // PostLinkByGroupId(textGroupId.value, post.id);
             }
-        }) .catch(function (error) {
-        // handle error
-        console.log("Ошибка блять", error);
-    });
+        });
 }
 
 function sendMessage(gid, postId, message, token)
