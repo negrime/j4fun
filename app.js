@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 
 
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 8080;
 let lastPostId = -1;
 
 
@@ -95,7 +95,10 @@ function checkLastPost() {
                 // scanText.innerText = "Комментарий отправлен!";
                 // PostLinkByGroupId(textGroupId.value, post.id);
             }
-        });
+        }) .catch(function (error) {
+        // handle error
+        console.log("Ошибка блять", error);
+    });
 }
 
 function sendMessage(gid, postId, message, token)
