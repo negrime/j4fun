@@ -1,30 +1,122 @@
 const request = require('request');
 const express = require('express');
+const axios = require('axios');
+const bodyParser = require('body-parser');
 
 
 let app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true}));
 
+
+const PORT = process.env.PORT || 80;
+let lastPostId = -1;
+
+
+let keyWords = [];
+
+let userToken = "";
+let groupId = 0;
 
 app.get('/', function (request, response) {
     response.send("Hello world!!!");
 })
 
 
-app.get('/test/:groupid&:token', function (req, res) {
-    // setInterval(functionnoide () {
-    //     request('https://api.vk.com/method/wall.get?owner_id=-"+ textGroupId.value +"&count=2&access_token="+ tokenText.value +"&v=5.52', { json: true }, (err, res, body) => {
-    //         if (err) { return console.log(err); }
-    //         console.log(body.url);
-    //         console.log(body.explanation);
-    //     });
-    // }, 1000)
-    console.log(req.params);
-    res.send(req.params);
+app.get('/start-scan/:groupid&:token', function (req, res) {
+
+    userToken = req.params.token;
+    groupId = req.params.groupid;
+    res.send("Start scanning");
+
+    setInterval(checkLastPost, 5000);
+
+
+
 })
 
 
-app.listen(8080, function () {
+app.post('/keywords', function (req, res) {
+    keyWords.push(req.body.value)
+    res.send(keyWords);
+})
+
+app.listen(PORT, function () {
     console.log("Server started");
 })
+
+function checkLastPost() {
+    let url = "https://api.vk.com/method/wall.get?owner_id=-"+ groupId +"&count=2&access_token="+ userToken +"&v=5.52";
+    axios.get(url)
+        .then(function (response) {
+            // handle success
+            data = response.data.response.items;
+            let post = data[0].is_pinned === 1 ? data[1] : data[0];
+            if (post.id <= lastPostId)
+            {
+                console.log(post.id);
+                return console.log("Not new post...");
+            }
+
+            if (lastPostId === -1)
+            {
+                lastPostId = post.id;
+                return;
+            }
+
+            console.log("New post!")
+            lastPostId = post.id;
+            post.text = post.text.toLowerCase();
+            let isContains = false;
+            keyWords.forEach(item =>  {
+                if (post.text.includes(item)){
+                    isContains = true;
+                }
+            })
+
+            if (isContains) {
+                console.log("sending")
+
+                sendMessage(groupId, post.id, "Привет world!!!", userToken);
+                // clearInterval(scanAnimation);
+                // scanText.innerText = "Комментарий отправлен!";
+                // PostLinkByGroupId(textGroupId.value, post.id);
+            }
+        });
+}
+
+function sendMessage(gid, postId, message, token)
+{
+    let url = "https://api.vk.com/method/wall.createComment?owner_id=-"+ gid +"&post_id="+ postId +"&message=" + encodeURIComponent(message) +"&access_token=" + token + "&v=5.52";
+    axios.get(url)
+        .then(function (response) {
+            console.log(response.data);
+        });
+
+    // $.ajax({
+    //     url: "https://api.vk.com/method/wall.createComment?owner_id=-"+ gid +"&post_id="+ postId +"&message=" + encodeURIComponent(message) +"&access_token=" + token + "&v=5.52",
+    //     type: 'GET',
+    //     dataType: 'jsonp',
+    //     success: function(data){
+    //         console.log(data.response);
+    //         //   data.response.items.forEach(el => console.log("https://vk.com/" +el.screen_name));
+    //     }
+    // })
+}
+
+function PostLinkByGroupId(groupId, postId) {
+
+    $.ajax({
+        url: "https://api.vk.com/method/groups.getById?group_id="+ groupId +"&access_token=" + tokenText.value + "&v=5.52",
+        type: 'GET',
+        dataType: 'jsonp',
+        success: function(data){
+            console.log(data.response);
+            linkToPost.style.display = "inline";
+            linkToPost.href = "https://vk.com/"+ data.response[0].screen_name +"?w=wall-"+ groupId +"_" + postId;
+        }
+    })
+}
+
 
 

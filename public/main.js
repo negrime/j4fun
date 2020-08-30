@@ -35,8 +35,16 @@ getPostsButton.onclick = function() {
     scanText.style.display = "inline";
     getPostsButton.disabled = true;
     stopButton.disabled = false;
-    checkLastPost();
-    postsChecker = setInterval(checkLastPost, 5000);
+    //checkLastPost();
+    //postsChecker = setInterval(checkLastPost, 5000);
+    $.ajax({
+        url: "http://localhost:8080/start-scan/" + textGroupId.value + "&" + tokenText.value,
+        type: 'GET',
+        dataType: 'jsonp',
+        success: function(data){
+
+        }
+    })
 
     let dotIndex = 0;
     scanAnimation = setInterval(() => {
@@ -70,6 +78,7 @@ keyWordsInput.oninput = function () {
         keyWords.push(keyWordsInput.value.replace(";","").toLowerCase());
         keyWordsDisplay.innerText += " " + keyWordsInput.value.replace(";", "");
         keyWordsInput.value = "";
+        $.post( "http://localhost:8080/keywords", { value: keyWords[keyWords.length - 1]});
     }
 }
 
@@ -97,7 +106,9 @@ function checkLastPost() {
             post.text = post.text.toLowerCase();
             let isContains = false;
             keyWords.forEach(item =>  {
-                isContains = post.text.includes(item);
+                if (post.text.includes(item)){
+                    isContains = true;
+                }
             })
 
             if (isContains) {
