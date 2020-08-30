@@ -59,10 +59,11 @@ app.listen(PORT, function () {
 })
 
 function checkLastPost() {
-    let url = "https://api.vk.com/method/wall.get?owner_id=-"+ groupId +"&count=2&access_token="+ userToken +"&v=5.52";
+    let url = "https://api.vk.com/method/wall.get?owner_id=-123621826&count=2&access_token=1e8778d5e3594bb11fc019c0389a64a062cc060c3bec1bdbca59441eadaa8989b54dc6dc3512f6b776eac&v=5.52";
     axios.get(url)
         .then(function (response) {
             // handle success
+            console.log("Request " + response.data.response);
             data = response.data.response.items;
             let post = data[0].is_pinned === 1 ? data[1] : data[0];
             if (post.id <= lastPostId)
@@ -95,8 +96,9 @@ function checkLastPost() {
                 // scanText.innerText = "Комментарий отправлен!";
                 // PostLinkByGroupId(textGroupId.value, post.id);
             }
-        }) .catch(function (error) {
+        }) .catch(function (error, response) {
         // handle error
+        console.log("response - " + response)
         console.log("Ошибка! " + error);
     });
 }
