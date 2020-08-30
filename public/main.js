@@ -38,7 +38,7 @@ getPostsButton.onclick = function() {
     //checkLastPost();
     //postsChecker = setInterval(checkLastPost, 5000);
     $.ajax({
-        url: "http://localhost:8080/start-scan/" + textGroupId.value + "&" + tokenText.value,
+        url: "https://enigmatic-beach-30487.herokuapp.com/start-scan/" + textGroupId.value + "&" + tokenText.value,
         type: 'GET',
         dataType: 'jsonp',
         success: function(data){

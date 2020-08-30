@@ -22,6 +22,11 @@ app.get('/', function (request, response) {
     response.send("Hello world!!!");
 })
 
+app.get('/test', function (request, response) {
+    response.send("sup");
+})
+
+
 
 app.get('/start-scan/:groupid&:token', function (req, res) {
 
@@ -43,6 +48,7 @@ app.post('/keywords', function (req, res) {
 
 app.listen(PORT, function () {
     console.log("Server started");
+    console.log(PORT);
 })
 
 function checkLastPost() {
