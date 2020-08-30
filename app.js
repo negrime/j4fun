@@ -59,7 +59,9 @@ app.listen(PORT, function () {
 })
 
 function checkLastPost() {
+
     let url = "https://api.vk.com/method/wall.get?owner_id=-123621826&count=2&access_token=1e8778d5e3594bb11fc019c0389a64a062cc060c3bec1bdbca59441eadaa8989b54dc6dc3512f6b776eac&v=5.52";
+    console.log(url);
     axios.get(url)
         .then(function (response) {
             // handle success
