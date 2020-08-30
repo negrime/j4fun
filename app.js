@@ -95,7 +95,10 @@ function checkLastPost() {
                 // scanText.innerText = "Комментарий отправлен!";
                 // PostLinkByGroupId(textGroupId.value, post.id);
             }
-        });
+        }) .catch(function (error) {
+        // handle error
+        console.log("Ошибка! " + error);
+    });
 }
 
 function sendMessage(gid, postId, message, token)
