@@ -19,6 +19,9 @@
     "express": "^4.17.1",
     "request": "^2.88.2"
   },
+  "engines": {
+    "node": "v12.16.1"
+  },
   "bugs": {
     "url": "https://github.com/negrime/j4fun/issues"
   },

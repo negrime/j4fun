@@ -100,7 +100,6 @@ function checkLastPost() {
             }
         }) .catch(function (error, response) {
         // handle error
-        console.log("response - " + response)
         console.log("Ошибка! " + error);
     });
 }
