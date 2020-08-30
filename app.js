@@ -61,7 +61,7 @@ app.listen(PORT, function () {
 
 function checkLastPost() {
 
-    let url = "https://api.vk.com/method/wall.get?owner_id=-123621826&count=2&access_token=1e8778d5e3594bb11fc019c0389a64a062cc060c3bec1bdbca59441eadaa8989b54dc6dc3512f6b776eac&v=5.52";
+    let url = "https://api.vk.com/method/wall.get?owner_id=-123621826&count=2&access_token=c6f2bcf7766dfb3e01e280fbfc56b4871aa9f255ecc12839442d68526c7477c3e708ce8a016c2500e85c3&v=5.52";
     console.log(url);
     fetch(url)
         .then(res => res.json())
