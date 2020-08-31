@@ -87,7 +87,7 @@ app.listen(PORT, function () {
 
 function checkLastPost() {
 
-    let url = "https://api.vk.com/method/wall.get?owner_id=-123621826&count=2&access_token=" + "78d01f63a3e960150de70c20673c9b67a8af31215772b25e2e4ffc7068dd38942ca8f90bb3c3f8360cdc6"+"&v=5.52";
+    let url = "https://api.vk.com/method/wall.get?owner_id=-123621826&count=2&access_token=" + userToken+"&v=5.52";
     console.log(url);
     fetch(url)
         .then(res => res.json())
@@ -139,7 +139,7 @@ function checkLastPost() {
 
 function sendMessage(gid, postId, message, token)
 {
-    let url = "https://api.vk.com/method/wall.createComment?owner_id=-"+ gid +"&post_id="+ postId +"&message=" + encodeURIComponent(message) +"&access_token=" + "b80858c9a296e2ec2133c6abe2cf4ace1f78f2b0cf1969c2e2a8972e25a6594c5c0b94f80eb8c522135b4" + "&v=5.52";
+    let url = "https://api.vk.com/method/wall.createComment?owner_id=-"+ gid +"&post_id="+ postId +"&message=" + encodeURIComponent(message) +"&access_token=" + "78d01f63a3e960150de70c20673c9b67a8af31215772b25e2e4ffc7068dd38942ca8f90bb3c3f8360cdc6" + "&v=5.52";
     console.log(url);
     axios.get(url)
         .then(function (response) {
