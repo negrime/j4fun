@@ -29,7 +29,7 @@ app.get('/', function (request, response) {
 app.get('/test', function (request, response) {
  //   response.send("sup");
 
-    let url = "https://oauth.vk.com/authorize?client_id=7583370&display=page&redirect_uri=https://enigmatic-beach-30487.herokuapp.com/best/&scope=wall,offline,email,groups&response_type=code&v=5.122";
+    let url = "https://oauth.vk.com/authorize?client_id=7583370&display=page&redirect_uri=https://enigmatic-beach-30487.herokuapp.com/best&scope=wall,offline,email,groups&response_type=code&v=5.122";
 
       //  fetch(url)
            // .then(res => res.json())
@@ -44,7 +44,7 @@ app.get('/best', function (request, response) {
     console.log(request.query.code);
  //   console.log(response)
 
-    let url = "https://oauth.vk.com/access_token?client_id=7583370&client_secret=nM768w7byjfoNbkQ1F5d&redirect_uri=https://enigmatic-beach-30487.herokuapp.com/best/&code="+ request.query.code;
+    let url = "https://oauth.vk.com/access_token?client_id=7583370&client_secret=nM768w7byjfoNbkQ1F5d&redirect_uri=https://enigmatic-beach-30487.herokuapp.com/best&code="+ request.query.code;
     fetch(url)
         .then(res => res.json())
         .then(json => {console.log(json); userToken = json.access_token });
